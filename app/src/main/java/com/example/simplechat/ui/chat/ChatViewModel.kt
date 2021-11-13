@@ -1,7 +1,7 @@
-package com.example.simplechat.ui.main
+package com.example.simplechat.ui.chat
 
 import androidx.lifecycle.ViewModel
 
-class MainViewModel : ViewModel() {
+class ChatViewModel : ViewModel() {
     // TODO: Implement the ViewModel
 }

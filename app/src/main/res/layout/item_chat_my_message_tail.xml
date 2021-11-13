@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvChatMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_chat_big"
+        android:layout_marginTop="@dimen/margin_vertical_chat_bubble"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_marginBottom="@dimen/margin_vertical_chat_bubble"
+        android:background="@drawable/bubble_tail_my_message"
+        android:padding="@dimen/padding_bubble_chat"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/chat_placeholder_text" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="8dp"
+        android:layout_marginBottom="4dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_seen"
+        app:layout_constraintBottom_toBottomOf="@id/tvChatMessage"
+        app:layout_constraintEnd_toEndOf="@id/tvChatMessage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
