@@ -1,14 +1,27 @@
 package com.example.simplechat.ui.chat
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.simplechat.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.simplechat.databinding.FragmentChatBinding
+import com.example.simplechat.ui.chat.recycler.ChatItemCompositeAdapter
+import com.example.simplechat.ui.chat.recycler.delegates.MessageReceivedDelegateAdapter
+import com.example.simplechat.ui.chat.recycler.delegates.MessageSentDelegateAdapter
+import com.example.simplechat.util.DummyDataProvider
 
 class ChatFragment : Fragment() {
+
+    private lateinit var binding: FragmentChatBinding
+    private val chatItemAdapter: ChatItemCompositeAdapter by lazy {
+        ChatItemCompositeAdapter.Builder()
+            .add(MessageSentDelegateAdapter())
+            .add(MessageReceivedDelegateAdapter())
+            .build()
+    }
 
     companion object {
         fun newInstance() = ChatFragment()
@@ -20,13 +33,23 @@ class ChatFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_chat, container, false)
+        binding = FragmentChatBinding.inflate(inflater, container, false)
+//        return inflater.inflate(R.layout.fragment_chat, container, false)
+        return binding.root
     }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(ChatViewModel::class.java)
         // TODO: Use the ViewModel
+        val layoutManager = LinearLayoutManager(context)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
+        binding.rvChatItems.layoutManager = layoutManager
+
+        binding.rvChatItems.adapter = chatItemAdapter
+        chatItemAdapter.submitList(DummyDataProvider().createDummy())
+        chatItemAdapter.notifyDataSetChanged()
     }
 
 }

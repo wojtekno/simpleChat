@@ -1,6 +1,6 @@
 package com.example.simplechat.ui.chat.model
 
-data class MyMessage(val id: Int, val message: String, val isSeen: Boolean, val hasTail: Boolean) :
+data class MessageSent(val id: Int, val message: String, val isSeen: Boolean, val hasTail: Boolean) :
     ChatItem {
     override fun id() = id
 

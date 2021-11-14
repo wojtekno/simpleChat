@@ -13,7 +13,7 @@
         android:layout_marginTop="@dimen/margin_vertical_chat_bubble"
         android:layout_marginEnd="@dimen/margin_16"
         android:layout_marginBottom="@dimen/margin_vertical_chat_bubble"
-        android:background="@drawable/bubble_tail_my_message"
+        android:background="@drawable/bubble_tail_message_sent"
         android:padding="@dimen/padding_bubble_chat"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

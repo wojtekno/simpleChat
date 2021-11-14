@@ -4,38 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tvChatMessage"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_chat_big"
+            android:layout_marginStart="@dimen/margin_16"
             android:layout_marginTop="@dimen/margin_vertical_chat_bubble"
-            android:layout_marginEnd="@dimen/margin_16"
+            android:layout_marginEnd="@dimen/margin_chat_big"
             android:layout_marginBottom="@dimen/margin_vertical_chat_bubble"
-            android:background="@drawable/bubble_message_sent"
+            android:background="@drawable/bubble_message_received"
             android:padding="@dimen/padding_bubble_chat"
-            android:textColor="@color/white"
-            app:layout_constrainedWidth="true"
+            android:textColor="@color/gray_chat_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/chat_placeholder_text" />
-
-        <ImageView
-            android:id="@+id/icIsSeen"
-            android:layout_width="0dp"
-            android:layout_height="8dp"
-            android:layout_marginBottom="4dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_seen"
-            app:layout_constraintBottom_toBottomOf="@id/tvChatMessage"
-            app:layout_constraintEnd_toEndOf="@id/tvChatMessage" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

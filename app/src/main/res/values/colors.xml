@@ -11,6 +11,8 @@
     <color name="pink_chat_background">#FB436E</color>
     <color name="gray_chat_background">#F2F5FB</color>
     <color name="gray_chat_text">#020F38</color>
+    <color name="unseen_ic_color">#FEC93E</color>
+    <color name="seen_ic_color">#C8CED5</color>
 
 
 </resources>
