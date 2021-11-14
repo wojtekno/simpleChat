@@ -11,6 +11,7 @@ import com.example.simplechat.databinding.FragmentChatBinding
 import com.example.simplechat.ui.chat.recycler.ChatItemCompositeAdapter
 import com.example.simplechat.ui.chat.recycler.delegates.MessageReceivedDelegateAdapter
 import com.example.simplechat.ui.chat.recycler.delegates.MessageSentDelegateAdapter
+import com.example.simplechat.ui.chat.recycler.delegates.TimeSectioningDelegateAdapter
 import com.example.simplechat.util.DummyDataProvider
 
 class ChatFragment : Fragment() {
@@ -20,6 +21,7 @@ class ChatFragment : Fragment() {
         ChatItemCompositeAdapter.Builder()
             .add(MessageSentDelegateAdapter())
             .add(MessageReceivedDelegateAdapter())
+            .add(TimeSectioningDelegateAdapter())
             .build()
     }
 
@@ -34,7 +36,6 @@ class ChatFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentChatBinding.inflate(inflater, container, false)
-//        return inflater.inflate(R.layout.fragment_chat, container, false)
         return binding.root
     }
 

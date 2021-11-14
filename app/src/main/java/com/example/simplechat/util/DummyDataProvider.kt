@@ -3,6 +3,7 @@ package com.example.simplechat.util
 import com.example.simplechat.ui.chat.model.ChatItem
 import com.example.simplechat.ui.chat.model.MessageReceived
 import com.example.simplechat.ui.chat.model.MessageSent
+import com.example.simplechat.ui.chat.model.TimeSection
 
 class DummyDataProvider {
 
@@ -18,7 +19,11 @@ class DummyDataProvider {
                         (i + 1) % 3 == 0
                     )
                 )
-            } else {
+            } else if (i% 4 == 2){
+                list.add(TimeSection("Thursday : 11:$i"))
+            }
+
+            else {
                 list.add(
                     MessageSent(
                         i,
