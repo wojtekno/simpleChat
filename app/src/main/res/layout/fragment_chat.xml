@@ -7,49 +7,64 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         tools:context=".ui.chat.ChatFragment">
 
-        <TextView
-            android:id="@+id/message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MainFragment"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvChatItems"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             app:layout_constraintBottom_toTopOf="@id/llTextEditorSection"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@drawable/shadow_2"
+            app:layout_constraintBottom_toTopOf="@id/llTextEditorSection" />
+
         <LinearLayout
             android:id="@+id/llTextEditorSection"
-            app:layout_constrainedWidth="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:elevation="80dp"
             android:orientation="horizontal"
+            android:paddingVertical="8dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rvChatItems">
 
             <EditText
                 android:id="@+id/etChatInput"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginStart="@dimen/margin_16"
-                android:layout_height="wrap_content"/>
+                android:layout_weight="1"
+                android:background="@drawable/chat_input_border_active"
+                android:hint="It's always good time to start a conversation"
+                android:maxLines="3"
+                android:paddingHorizontal="@dimen/margin_16" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btSend"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:layout_gravity="bottom"
                 android:layout_marginStart="@dimen/margin_16"
-                android:layout_marginEnd="@dimen/margin_16" />
+                android:layout_marginEnd="@dimen/margin_16"
+                android:background="@drawable/send_button_gradient"
+                android:drawableStart="@drawable/ic_send_24"
+                android:paddingStart="12dp" />
         </LinearLayout>
 
 

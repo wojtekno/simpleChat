@@ -26,9 +26,10 @@ class TimeSectioningDelegateAdapter :
 
     inner class TimeSectionViewHolder(private val messageReceivedBinding: ItemSectioningBinding) :
         RecyclerView.ViewHolder(messageReceivedBinding.root) {
-        fun bind(time: TimeSection) {
+        fun bind(section: TimeSection) {
             with(messageReceivedBinding) {
-                tvTimeSection.text = time.time
+                tvTimeSection.text = section.time
+                tvDateSection.text = section.date
             }
         }
     }

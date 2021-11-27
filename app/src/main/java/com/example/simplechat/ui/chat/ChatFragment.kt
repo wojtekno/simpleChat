@@ -1,18 +1,25 @@
 package com.example.simplechat.ui.chat
 
 import android.os.Bundle
+import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.simplechat.R
 import com.example.simplechat.databinding.FragmentChatBinding
 import com.example.simplechat.ui.chat.recycler.ChatItemCompositeAdapter
 import com.example.simplechat.ui.chat.recycler.delegates.MessageReceivedDelegateAdapter
 import com.example.simplechat.ui.chat.recycler.delegates.MessageSentDelegateAdapter
 import com.example.simplechat.ui.chat.recycler.delegates.TimeSectioningDelegateAdapter
 import com.example.simplechat.util.DummyDataProvider
+
 
 class ChatFragment : Fragment() {
 
@@ -39,18 +46,58 @@ class ChatFragment : Fragment() {
         return binding.root
     }
 
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(ChatViewModel::class.java)
-        // TODO: Use the ViewModel
+
+        setupChatItemsRv()
+        setChatInput()
+
+        viewModel.isChatInputActive.observe(viewLifecycleOwner) { makeInputSectionActive(it) }
+        Log.d("chatFragment", "onAct created")
+    }
+
+    private fun setChatInput() {
+        binding.etChatInput.setOnFocusChangeListener { view, hasFocus ->
+            Log.d("chatFragment", "has etfocus $hasFocus")
+            if (!hasFocus) hideKeyboard(view)
+        }
+        binding.etChatInput.doAfterTextChanged { editable -> viewModel.textChanged(editable.toString()) }
+
+        binding.btSend.setOnClickListener {
+            binding.etChatInput.clearFocus()
+            viewModel.sendClicked()
+        }
+    }
+
+    private fun setupChatItemsRv() {
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.rvChatItems.layoutManager = layoutManager
-
         binding.rvChatItems.adapter = chatItemAdapter
         chatItemAdapter.submitList(DummyDataProvider().createDummy())
-        chatItemAdapter.notifyDataSetChanged()
     }
 
+    private fun hideKeyboard(view: View) {
+        val inputMethodManager: InputMethodManager? = getSystemService(requireContext(), InputMethodManager::class.java)
+        inputMethodManager?.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun makeInputSectionActive(active: Boolean) {
+        with(binding.btSend) {
+            isEnabled = active
+            val alpha = if (active) 1F
+            else 0.6F
+            setAlpha(alpha)
+        }
+
+        val inputBorder = if (active) R.drawable.chat_input_border_active
+        else R.drawable.chat_input_border_inactive
+
+        with(binding.etChatInput) {
+            setBackgroundResource(inputBorder)
+            if (!active) text.clear()
+        }
+    }
 }
+

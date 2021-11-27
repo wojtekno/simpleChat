@@ -5,4 +5,5 @@
     <dimen name="margin_16">16dp</dimen>
     <dimen name="margin_vertical_chat_bubble">4dp</dimen>
     <dimen name="padding_bubble_chat">8dp</dimen>
+    <dimen name="margin_8">8dp</dimen>
 </resources>

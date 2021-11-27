@@ -5,14 +5,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tvDateSection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            tools:text="Thursday"
+            android:layout_marginEnd="@dimen/margin_8"/>
 
         <TextView
             android:id="@+id/tvTimeSection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            tools:text="Thursday 11:59" />
+            tools:text="11:59" />
 
     </LinearLayout>
 </layout>

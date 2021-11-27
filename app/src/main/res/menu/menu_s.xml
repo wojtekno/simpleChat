@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/switch_action"
+        android:icon="@drawable/ic_send_24"
+        android:title="switch"
+        app:showAsAction="never" />
+
+<!--    &lt;!&ndash;    Settings, should always be in the overflow&ndash;&gt;-->
+<!--    <item-->
+<!--        android:id="@+id/action_settings"-->
+<!--        android:title="sett_action"-->
+<!--        app:showAsAction="never" />-->
+
+</menu>
