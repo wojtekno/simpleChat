@@ -9,32 +9,27 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.simplechat.R
 import com.example.simplechat.databinding.FragmentChatBinding
 import com.example.simplechat.ui.chat.recycler.ChatItemCompositeAdapter
-import com.example.simplechat.ui.chat.recycler.delegates.MessageReceivedDelegateAdapter
-import com.example.simplechat.ui.chat.recycler.delegates.MessageSentDelegateAdapter
-import com.example.simplechat.ui.chat.recycler.delegates.TimeSectioningDelegateAdapter
 import com.example.simplechat.util.DummyDataProvider
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ChatFragment : Fragment() {
 
     private lateinit var binding: FragmentChatBinding
-    private val chatItemAdapter: ChatItemCompositeAdapter by lazy {
-        ChatItemCompositeAdapter.Builder()
-            .add(MessageSentDelegateAdapter())
-            .add(MessageReceivedDelegateAdapter())
-            .add(TimeSectioningDelegateAdapter())
-            .build()
-    }
+
+    @Inject lateinit var chatItemAdapter: ChatItemCompositeAdapter
+
+    private val viewModel: ChatViewModel by viewModels()
 
     companion object {
         fun newInstance() = ChatFragment()
     }
-
-    private lateinit var viewModel: ChatViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +42,6 @@ class ChatFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ChatViewModel::class.java)
 
         setupChatItemsRv()
         setChatInput()
