@@ -8,6 +8,6 @@ interface ChatItem {
     fun payload(other: Any): Payloadable = Payloadable.None
 
     interface Payloadable {
-        object None: Payloadable
+        object None : Payloadable
     }
 }

@@ -29,12 +29,9 @@ data class MessageReceived(val id: Int, val message: String, val hasTail: Boolea
         override fun hashCode(): Int {
             return 31 * hasTail.hashCode()
         }
-
-
     }
 
     sealed class ChangePayload : ChatItem.Payloadable {
         data class HasTailChanged(val hasTail: Boolean) : ChangePayload()
     }
-
 }

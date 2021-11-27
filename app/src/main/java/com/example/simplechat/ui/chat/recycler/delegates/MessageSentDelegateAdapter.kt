@@ -10,7 +10,6 @@ import com.example.simplechat.ui.chat.model.MessageSent
 
 class MessageSentDelegateAdapter : DelegateAdapter<MessageSent, MessageSentDelegateAdapter.MyMessageViewHolder>(MessageSent::class.java) {
 
-
     override fun createViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
         val viewBinding = ItemChatMyMessageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyMessageViewHolder(viewBinding)
@@ -77,6 +76,5 @@ class MessageSentDelegateAdapter : DelegateAdapter<MessageSent, MessageSentDeleg
             }
             icIsSeen.setImageResource(isSeenIcon)
         }
-
     }
 }

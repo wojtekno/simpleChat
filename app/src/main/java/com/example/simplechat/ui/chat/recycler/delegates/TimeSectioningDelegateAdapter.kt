@@ -10,7 +10,6 @@ import com.example.simplechat.ui.chat.model.TimeSection
 class TimeSectioningDelegateAdapter :
     DelegateAdapter<TimeSection, TimeSectioningDelegateAdapter.TimeSectionViewHolder>(TimeSection::class.java) {
 
-
     override fun createViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
         val viewBinding = ItemSectioningBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TimeSectionViewHolder(viewBinding)

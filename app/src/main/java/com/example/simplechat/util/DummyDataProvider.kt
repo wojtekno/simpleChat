@@ -21,7 +21,7 @@ class DummyDataProvider {
                         )
                     )
                 }
-                i% 4 == 2 -> {
+                i % 4 == 2 -> {
                     list.add(TimeSection("Thursday", "11:$i"))
                 }
                 else -> {
@@ -35,7 +35,6 @@ class DummyDataProvider {
                     )
                 }
             }
-
         }
         return list
     }

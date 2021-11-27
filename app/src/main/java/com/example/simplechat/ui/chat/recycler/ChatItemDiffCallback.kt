@@ -6,7 +6,7 @@ import com.example.simplechat.ui.chat.model.ChatItem
 
 class ChatItemDiffCallback : DiffUtil.ItemCallback<ChatItem>() {
     override fun areItemsTheSame(oldItem: ChatItem, newItem: ChatItem): Boolean {
-       return oldItem::class == newItem::class && oldItem.id() == newItem.id()
+        return oldItem::class == newItem::class && oldItem.id() == newItem.id()
     }
 
     @SuppressLint("DiffUtilEquals")

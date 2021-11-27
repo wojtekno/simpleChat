@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadAnotherUser(){
-        //TODO load another user
+    private fun loadAnotherUser() {
+        // TODO load another user
     }
 }

@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 class ChatViewModel : ViewModel() {
 
     private val _isChatInputActive = MutableLiveData(false)
-    val isChatInputActive : LiveData<Boolean> = _isChatInputActive
+    val isChatInputActive: LiveData<Boolean> = _isChatInputActive
 
     fun textChanged(chatInput: String) {
         _isChatInputActive.value = chatInput.isNotEmpty()
@@ -19,5 +19,4 @@ class ChatViewModel : ViewModel() {
         _isChatInputActive.value = false
         Log.d("vm", "sendClicked")
     }
-
 }

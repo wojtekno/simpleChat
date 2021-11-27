@@ -1,7 +1,6 @@
 package com.example.simplechat.ui.chat
 
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +18,6 @@ import com.example.simplechat.ui.chat.recycler.delegates.MessageReceivedDelegate
 import com.example.simplechat.ui.chat.recycler.delegates.MessageSentDelegateAdapter
 import com.example.simplechat.ui.chat.recycler.delegates.TimeSectioningDelegateAdapter
 import com.example.simplechat.util.DummyDataProvider
-
 
 class ChatFragment : Fragment() {
 
@@ -39,7 +37,8 @@ class ChatFragment : Fragment() {
     private lateinit var viewModel: ChatViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentChatBinding.inflate(inflater, container, false)
@@ -100,4 +99,3 @@ class ChatFragment : Fragment() {
         }
     }
 }
-

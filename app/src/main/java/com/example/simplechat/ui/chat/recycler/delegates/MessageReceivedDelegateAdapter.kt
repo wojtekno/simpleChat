@@ -11,7 +11,6 @@ import com.example.simplechat.ui.chat.model.MessageReceived
 class MessageReceivedDelegateAdapter :
     DelegateAdapter<MessageReceived, MessageReceivedDelegateAdapter.MessageReceivedViewHolder>(MessageReceived::class.java) {
 
-
     override fun createViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
         val viewBinding = ItemChatMessageReceivedBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MessageReceivedViewHolder(viewBinding)

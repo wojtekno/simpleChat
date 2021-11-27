@@ -34,8 +34,6 @@ data class MessageSent(val id: Int, val message: String, val isSeen: Boolean, va
             result = 31 * result + isSeen.hashCode()
             return result
         }
-
-
     }
 
     sealed class ChangePayload : ChatItem.Payloadable {
@@ -43,5 +41,4 @@ data class MessageSent(val id: Int, val message: String, val isSeen: Boolean, va
         data class HasTailChanged(val hasTail: Boolean) : ChangePayload()
         data class IsSeenAndHasTailChanged(val isSeen: Boolean, val hasTail: Boolean) : ChangePayload()
     }
-
 }
