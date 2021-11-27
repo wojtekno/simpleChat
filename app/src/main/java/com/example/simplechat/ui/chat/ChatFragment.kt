@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.simplechat.R
 import com.example.simplechat.databinding.FragmentChatBinding
 import com.example.simplechat.ui.chat.recycler.ChatItemCompositeAdapter
-import com.example.simplechat.util.DummyDataProvider
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -48,6 +47,10 @@ class ChatFragment : Fragment() {
 
         viewModel.isChatInputActive.observe(viewLifecycleOwner) { makeInputSectionActive(it) }
         Log.d("chatFragment", "onAct created")
+
+        viewModel.chatItems.observe(viewLifecycleOwner) {
+            chatItemAdapter.submitList(it)
+        }
     }
 
     private fun setChatInput() {
@@ -68,7 +71,6 @@ class ChatFragment : Fragment() {
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.rvChatItems.layoutManager = layoutManager
         binding.rvChatItems.adapter = chatItemAdapter
-        chatItemAdapter.submitList(DummyDataProvider().createDummy())
     }
 
     private fun hideKeyboard(view: View) {
