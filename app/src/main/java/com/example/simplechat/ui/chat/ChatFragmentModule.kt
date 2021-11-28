@@ -35,6 +35,7 @@ abstract class ChatViewModelModule {
 
     @Binds
     abstract fun bindGetChatMessagesUseCase(getMessagesImpl: GetMessagesImpl): GetMessagesUseCase
+
     @Binds
     abstract fun bindSendMessagesUseCase(sendMessageImpl: SendMessageImpl): SendMessageUseCase
 }

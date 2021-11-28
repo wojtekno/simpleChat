@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.switch_action -> {
-            Toast.makeText(applicationContext, "Switching user", Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, "Switching user", Toast.LENGTH_SHORT).show()
             loadAnotherUser()
             true
         }

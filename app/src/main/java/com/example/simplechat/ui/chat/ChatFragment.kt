@@ -1,7 +1,6 @@
 package com.example.simplechat.ui.chat
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,17 +27,6 @@ class ChatFragment : Fragment() {
 
     private val viewModel: ChatViewModel by viewModels()
 
-    companion object {
-        private const val USER_ID = "USER_ID"
-        private const val CHAT_ID = "CHAT_ID"
-        fun newInstance(userId: Int, chatId: Int) = ChatFragment().apply {
-            arguments = bundleOf(
-                USER_ID to userId,
-                CHAT_ID to chatId
-            )
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,12 +38,8 @@ class ChatFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("chatFragment", "onAct created")
-
         setupChatItemsRv()
-        setChatInput()
-
-        viewModel.isChatInputActive.observe(viewLifecycleOwner) { makeInputSectionActive(it) }
+        setupChatInput()
 
         with(arguments) {
             val userId: Int = this!!.getInt(USER_ID)
@@ -63,6 +47,11 @@ class ChatFragment : Fragment() {
             setupViewModel(userId, chatId)
         }
 
+        setupObservers()
+    }
+
+    private fun setupObservers() {
+        viewModel.isChatInputActive.observe(viewLifecycleOwner) { makeInputSectionActive(it) }
         viewModel.chatItems().observe(viewLifecycleOwner) {
             chatItemAdapter.submitList(it)
             binding.rvChatItems.smoothScrollToPosition(it.size)
@@ -72,12 +61,11 @@ class ChatFragment : Fragment() {
     private fun setupViewModel(userId: Int, chatId: Int) {
         viewModel.setUpUserId(userId)
         viewModel.setUpChatId(chatId)
-        viewModel.initMessages()
+        viewModel.initChatItems()
     }
 
-    private fun setChatInput() {
+    private fun setupChatInput() {
         binding.etChatInput.setOnFocusChangeListener { view, hasFocus ->
-            Log.d("chatFragment", "has etfocus $hasFocus")
             if (!hasFocus) hideKeyboard(view)
         }
         binding.etChatInput.doAfterTextChanged { editable -> viewModel.textChanged(editable.toString()) }
@@ -106,19 +94,37 @@ class ChatFragment : Fragment() {
     }
 
     private fun makeInputSectionActive(active: Boolean) {
-        with(binding.btSend) {
-            isEnabled = active
-            val alpha = if (active) 1F
-            else 0.6F
-            setAlpha(alpha)
-        }
+        setBtSendState(active)
+        setEtChatInputState(active)
+    }
 
+    private fun setEtChatInputState(active: Boolean) {
         val inputBorder = if (active) R.drawable.chat_input_border_active
         else R.drawable.chat_input_border_inactive
 
         with(binding.etChatInput) {
             setBackgroundResource(inputBorder)
             if (!active) text.clear()
+        }
+    }
+
+    private fun setBtSendState(active: Boolean) {
+        with(binding.btSend) {
+            isEnabled = active
+            val alpha = if (active) 1F
+            else 0.6F
+            setAlpha(alpha)
+        }
+    }
+
+    companion object {
+        private const val USER_ID = "USER_ID"
+        private const val CHAT_ID = "CHAT_ID"
+        fun newInstance(userId: Int, chatId: Int) = ChatFragment().apply {
+            arguments = bundleOf(
+                USER_ID to userId,
+                CHAT_ID to chatId
+            )
         }
     }
 }
