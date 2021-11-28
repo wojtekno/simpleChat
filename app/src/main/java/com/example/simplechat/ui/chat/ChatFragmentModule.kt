@@ -1,7 +1,7 @@
 package com.example.simplechat.ui.chat
 
-import com.example.core.usecases.GetMessagesUseCase
 import com.example.core.usecases.GetMessagesImpl
+import com.example.core.usecases.GetMessagesUseCase
 import com.example.core.usecases.SendMessageImpl
 import com.example.core.usecases.SendMessageUseCase
 import com.example.simplechat.ui.chat.recycler.ChatItemCompositeAdapter

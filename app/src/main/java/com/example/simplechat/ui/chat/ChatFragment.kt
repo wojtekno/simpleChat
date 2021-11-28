@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,7 +29,14 @@ class ChatFragment : Fragment() {
     private val viewModel: ChatViewModel by viewModels()
 
     companion object {
-        fun newInstance() = ChatFragment()
+        private const val USER_ID = "USER_ID"
+        private const val CHAT_ID = "CHAT_ID"
+        fun newInstance(userId: Int, chatId: Int) = ChatFragment().apply {
+            arguments = bundleOf(
+                USER_ID to userId,
+                CHAT_ID to chatId
+            )
+        }
     }
 
     override fun onCreateView(
@@ -42,17 +50,29 @@ class ChatFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("chatFragment", "onAct created")
 
         setupChatItemsRv()
         setChatInput()
 
         viewModel.isChatInputActive.observe(viewLifecycleOwner) { makeInputSectionActive(it) }
-        Log.d("chatFragment", "onAct created")
 
-        viewModel.chatItems.observe(viewLifecycleOwner) {
+        with(arguments) {
+            val userId: Int = this!!.getInt(USER_ID)
+            val chatId: Int = this!!.getInt(CHAT_ID)
+            setupViewModel(userId, chatId)
+        }
+
+        viewModel.chatItems().observe(viewLifecycleOwner) {
             chatItemAdapter.submitList(it)
             binding.rvChatItems.smoothScrollToPosition(it.size)
         }
+    }
+
+    private fun setupViewModel(userId: Int, chatId: Int) {
+        viewModel.setUpUserId(userId)
+        viewModel.setUpChatId(chatId)
+        viewModel.initMessages()
     }
 
     private fun setChatInput() {

@@ -11,6 +11,9 @@ interface ChatMessageDao {
     @Query("SELECT * FROM chat_message WHERE (receiverId = :chatId OR senderId = :chatId)")
     fun getMessagesForChatId(chatId: Int): Flow<List<ChatMessageEntity>>
 
+    @Query("SELECT * FROM chat_message WHERE (senderId = :userId AND receiverId = :chatId) OR (senderId =:chatId AND receiverId = :userId)")
+    fun getMessagesForChatId(userId: Int, chatId: Int): Flow<List<ChatMessageEntity>>
+
     @Insert
     fun insertMessages(messages: List<ChatMessageEntity>)
 

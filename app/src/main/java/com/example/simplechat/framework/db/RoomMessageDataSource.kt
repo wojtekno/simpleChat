@@ -12,6 +12,11 @@ class RoomMessageDataSource @Inject constructor(private val messageDao: ChatMess
             .map { messages -> messages.map { it.toModel() } }
     }
 
+    override fun getMessages(userId: Int, chatId: Int): Flow<List<ChatMessage>> {
+        return messageDao.getMessagesForChatId(userId, chatId)
+            .map { messages -> messages.map { it.toModel() } }
+    }
+
     override suspend fun insertAll(messages: List<ChatMessage>) {
         messageDao.insertMessages(messages.map { it.toEntity() })
     }

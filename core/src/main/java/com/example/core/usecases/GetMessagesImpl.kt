@@ -11,4 +11,8 @@ class GetMessagesImpl @Inject constructor(private val messageRepository: Message
         Logger.getLogger(this.javaClass.name).config("execute")
         return messageRepository.getMessages(chatId)
     }
+
+    override fun execute2(userId: Int, chatId: Int): Flow<List<ChatMessage>> {
+        return messageRepository.getMessages(userId, chatId)
+    }
 }

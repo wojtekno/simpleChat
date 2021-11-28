@@ -5,4 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface GetMessagesUseCase {
     fun execute(chatId: Int): Flow<List<ChatMessage>>
+    fun execute2(userId: Int, chatId: Int): Flow<List<ChatMessage>>
 }

@@ -15,10 +15,11 @@ import com.example.simplechat.ui.chat.model.MessageSent
 import com.example.simplechat.ui.chat.model.TimeSection
 import com.example.simplechat.util.DaysHoursFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import kotlin.properties.Delegates
 
 @HiltViewModel
 class ChatViewModel @Inject constructor(
@@ -28,36 +29,42 @@ class ChatViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private var userId = 1
-    private var chatId = 2
+    private var userId by Delegates.notNull<Int>()
+    private var chatId by Delegates.notNull<Int>()
 
     private val hourInMilliseconds = 3600000
     private val twentySecondInMilliseconds = 20000
 
     private val _isChatInputActive = MutableLiveData(false)
 
-    //    private val _chatItems = MutableLiveData<List<ChatItem>>()
-    private val _chatItems = getMessagesUseCase.execute(1).map { messages ->
-        Log.d("vm", "msg size : ${messages.size}")
-        val list = mutableListOf<ChatItem>()
-        val lastIndex = messages.size - 1
-        for (i in 0..lastIndex) {
-            val message = messages[i]
-            if (i == 0 || messages[i - 1].creationDate < message.creationDate - hourInMilliseconds) {
-                list.add(TimeSection(daysHoursFormatter.getDay(message.creationDate), daysHoursFormatter.getHour(messages[i].creationDate)))
-            }
-            if (message.senderId == chatId) {
-                val hasTail = hasTail(i, lastIndex, message, messages)
-                list.add(MessageReceived(message.id, message.message, hasTail))
-            } else {
-                list.add(MessageSent(message.id, message.message, message.isSeen, hasTail(i, lastIndex, message, messages)))
-            }
+    private lateinit var _chatItems: LiveData<List<ChatItem>> // ? = null // by {}
+
+    fun chatItems(): LiveData<List<ChatItem>> = _chatItems!!
+    fun initMessages() {
+        if (!this::_chatItems.isInitialized) {
+            Log.d("vm", "fetching from db")
+            _chatItems = getMessagesUseCase.execute2(userId, chatId).map { messages ->
+                Log.d("vm", "msg size : ${messages.size}")
+                val list = mutableListOf<ChatItem>()
+                val lastIndex = messages.size - 1
+                for (i in 0..lastIndex) {
+                    val message = messages[i]
+                    if (i == 0 || messages[i - 1].creationDate < message.creationDate - hourInMilliseconds) {
+                        list.add(TimeSection(daysHoursFormatter.getDay(message.creationDate), daysHoursFormatter.getHour(messages[i].creationDate)))
+                    }
+                    if (message.senderId == chatId) {
+                        val hasTail = hasTail(i, lastIndex, message, messages)
+                        list.add(MessageReceived(message.id, message.message, hasTail))
+                    } else {
+                        list.add(MessageSent(message.id, message.message, message.isSeen, hasTail(i, lastIndex, message, messages)))
+                    }
+                }
+                return@map list.toList()
+            }.asLiveData()
         }
-        return@map list.toList()
-    }.asLiveData()
+    }
 
     val isChatInputActive: LiveData<Boolean> = _isChatInputActive
-    val chatItems: LiveData<List<ChatItem>> = _chatItems
 
     fun textChanged(chatInput: String) {
         _isChatInputActive.value = chatInput.isNotEmpty()
@@ -84,5 +91,13 @@ class ChatViewModel @Inject constructor(
             messages[currentIndex + 1].creationDate > message.creationDate + twentySecondInMilliseconds -> true
             else -> false
         }
+    }
+
+    fun setUpUserId(id: Int) {
+        userId = id
+    }
+
+    fun setUpChatId(id: Int) {
+        chatId = id
     }
 }

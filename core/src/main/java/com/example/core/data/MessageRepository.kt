@@ -10,9 +10,8 @@ class MessageRepository @Inject constructor(private val localDataSource: Message
         return localDataSource.getMessages(chatId)
     }
 
-    suspend fun insertAll(messages: List<ChatMessage>) {
-        Logger.getLogger(this.javaClass.name).config("inserting all messages")
-        localDataSource.insertAll(messages)
+    fun getMessages(userId: Int, chatId: Int): Flow<List<ChatMessage>> {
+        return localDataSource.getMessages(userId, chatId)
     }
 
     suspend fun insert(message: ChatMessage) {
