@@ -22,7 +22,8 @@ class ChatFragment : Fragment() {
 
     private lateinit var binding: FragmentChatBinding
 
-    @Inject lateinit var chatItemAdapter: ChatItemCompositeAdapter
+    @Inject
+    lateinit var chatItemAdapter: ChatItemCompositeAdapter
 
     private val viewModel: ChatViewModel by viewModels()
 
@@ -50,6 +51,7 @@ class ChatFragment : Fragment() {
 
         viewModel.chatItems.observe(viewLifecycleOwner) {
             chatItemAdapter.submitList(it)
+            binding.rvChatItems.smoothScrollToPosition(it.size)
         }
     }
 
@@ -62,7 +64,7 @@ class ChatFragment : Fragment() {
 
         binding.btSend.setOnClickListener {
             binding.etChatInput.clearFocus()
-            viewModel.sendClicked()
+            viewModel.sendClicked(binding.etChatInput.text.toString())
         }
     }
 
@@ -71,6 +73,11 @@ class ChatFragment : Fragment() {
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         binding.rvChatItems.layoutManager = layoutManager
         binding.rvChatItems.adapter = chatItemAdapter
+        binding.rvChatItems.addOnLayoutChangeListener { v, i, i2, i3, i4, i5, i6, i7, i8 ->
+            binding.rvChatItems.smoothScrollToPosition(
+                chatItemAdapter.itemCount
+            )
+        }
     }
 
     private fun hideKeyboard(view: View) {

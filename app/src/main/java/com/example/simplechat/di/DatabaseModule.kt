@@ -15,6 +15,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import java.util.concurrent.Executors
+import javax.inject.Provider
 import javax.inject.Singleton
 
 @Module
@@ -22,7 +23,7 @@ import javax.inject.Singleton
 object DatabaseModule {
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
+    fun provideAppDatabase(@ApplicationContext context: Context, provider: Provider<ChatMessageDao>): AppDatabase {
         Log.d("DatabaseModule", "providing appDb")
         return Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.APP_DATABASE_NAME)
             .addCallback(object : RoomDatabase.Callback() {
@@ -30,7 +31,7 @@ object DatabaseModule {
                     super.onCreate(db)
                     Executors.newSingleThreadExecutor().execute {
                         Log.d(this.javaClass.name, "prepopulating DB")
-                        provideAppDatabase(context).chatMessageDao().insertMessages(DummyData().createChatMessagesDummy().map { it.toEntity() })
+                        provider.get().insertMessages(DummyData().createChatMessagesDummy().map { it.toEntity() })
                         Log.d(this.javaClass.name, "populated done")
                     }
                 }

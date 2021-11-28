@@ -1,7 +1,9 @@
 package com.example.simplechat.ui.chat
 
 import com.example.core.usecases.GetMessagesUseCase
-import com.example.core.usecases.GetMessagesUseCaseImpl
+import com.example.core.usecases.GetMessagesImpl
+import com.example.core.usecases.SendMessageImpl
+import com.example.core.usecases.SendMessageUseCase
 import com.example.simplechat.ui.chat.recycler.ChatItemCompositeAdapter
 import com.example.simplechat.ui.chat.recycler.delegates.MessageReceivedDelegateAdapter
 import com.example.simplechat.ui.chat.recycler.delegates.MessageSentDelegateAdapter
@@ -32,5 +34,7 @@ object ChatFragmentModule {
 abstract class ChatViewModelModule {
 
     @Binds
-    abstract fun bindGetChatMessagesUseCase(getMessagesImpl: GetMessagesUseCaseImpl): GetMessagesUseCase
+    abstract fun bindGetChatMessagesUseCase(getMessagesImpl: GetMessagesImpl): GetMessagesUseCase
+    @Binds
+    abstract fun bindSendMessagesUseCase(sendMessageImpl: SendMessageImpl): SendMessageUseCase
 }

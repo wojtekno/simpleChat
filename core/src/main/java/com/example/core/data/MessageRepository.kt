@@ -14,4 +14,8 @@ class MessageRepository @Inject constructor(private val localDataSource: Message
         Logger.getLogger(this.javaClass.name).config("inserting all messages")
         localDataSource.insertAll(messages)
     }
+
+    suspend fun insert(message: ChatMessage) {
+        localDataSource.insert(message)
+    }
 }

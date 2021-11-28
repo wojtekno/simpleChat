@@ -5,21 +5,31 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
 import com.example.core.domain.ChatMessage
 import com.example.core.usecases.GetMessagesUseCase
+import com.example.core.usecases.SendMessageUseCase
 import com.example.simplechat.ui.chat.model.ChatItem
 import com.example.simplechat.ui.chat.model.MessageReceived
 import com.example.simplechat.ui.chat.model.MessageSent
 import com.example.simplechat.ui.chat.model.TimeSection
 import com.example.simplechat.util.DaysHoursFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 @HiltViewModel
-class ChatViewModel @Inject constructor(private val getMessagesUseCase: GetMessagesUseCase, private val daysHoursFormatter: DaysHoursFormatter) :
+class ChatViewModel @Inject constructor(
+    private val getMessagesUseCase: GetMessagesUseCase,
+    private val sendMessageUseCase: SendMessageUseCase,
+    private val daysHoursFormatter: DaysHoursFormatter
+) :
     ViewModel() {
+
+    private var userId = 1
+    private var chatId = 2
 
     private val hourInMilliseconds = 3600000
     private val twentySecondInMilliseconds = 20000
@@ -28,9 +38,7 @@ class ChatViewModel @Inject constructor(private val getMessagesUseCase: GetMessa
 
     //    private val _chatItems = MutableLiveData<List<ChatItem>>()
     private val _chatItems = getMessagesUseCase.execute(1).map { messages ->
-        messages
         Log.d("vm", "msg size : ${messages.size}")
-        val chatId = 1
         val list = mutableListOf<ChatItem>()
         val lastIndex = messages.size - 1
         for (i in 0..lastIndex) {
@@ -56,9 +64,12 @@ class ChatViewModel @Inject constructor(private val getMessagesUseCase: GetMessa
         Log.d("vm", chatInput)
     }
 
-    fun sendClicked() {
+    fun sendClicked(message: String) {
         _isChatInputActive.value = false
         Log.d("vm", "sendClicked")
+        viewModelScope.launch(Dispatchers.IO) {
+            sendMessageUseCase.execute(ChatMessage(1, userId, chatId, message, false, System.currentTimeMillis()))
+        }
     }
 
     private fun hasTail(

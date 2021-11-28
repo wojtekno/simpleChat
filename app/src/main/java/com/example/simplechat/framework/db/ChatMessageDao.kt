@@ -13,4 +13,7 @@ interface ChatMessageDao {
 
     @Insert
     fun insertMessages(messages: List<ChatMessageEntity>)
+
+    @Insert
+    fun insert(message: ChatMessageEntity)
 }

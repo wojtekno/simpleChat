@@ -15,4 +15,8 @@ class RoomMessageDataSource @Inject constructor(private val messageDao: ChatMess
     override suspend fun insertAll(messages: List<ChatMessage>) {
         messageDao.insertMessages(messages.map { it.toEntity() })
     }
+
+    override suspend fun insert(message: ChatMessage) {
+        messageDao.insert(message.toEntity())
+    }
 }
