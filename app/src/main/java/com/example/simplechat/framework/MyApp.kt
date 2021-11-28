@@ -1,4 +1,4 @@
-package com.example.simplechat
+package com.example.simplechat.framework
 
 import android.app.Application
 import android.util.Log

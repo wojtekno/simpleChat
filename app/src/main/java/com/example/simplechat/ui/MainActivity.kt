@@ -1,10 +1,11 @@
-package com.example.simplechat
+package com.example.simplechat.ui
 
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.simplechat.R
 import com.example.simplechat.ui.chat.ChatFragment
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,7 +1,8 @@
 package com.example.core.usecases
 
 import com.example.core.domain.ChatMessage
+import kotlinx.coroutines.flow.Flow
 
 interface GetMessagesUseCase {
-    suspend fun execute(chatId: Int): List<ChatMessage>
+    fun execute(chatId: Int): Flow<List<ChatMessage>>
 }
